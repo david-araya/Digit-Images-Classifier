@@ -61,3 +61,41 @@ init = tf.initialize_all_variables()
 
 #Merge all summaries into a single operator
 merged_summary_op = tf.merge_all_summaries()
+
+#Launch the graph
+with tf.Session() as sess:
+    sess.run(init)
+    
+    #Set the logs writer to the folder /tmp/tensorflow_logs
+    summary_writer = tf.train.SummaryWriter('/home/sergo/work/logs', graph_def=sess.graph_def)
+    
+    #Training cycle
+    for iteration in range(training_iteration):
+        avg_cost = 0.
+        total_batch = int(mnist.train.num_examples/batch_size)
+        
+        #loop over all batches
+        for i in range(total_batch)
+            batch_xs, batch_ys = mnist.train.next_batch(batch_size)
+            
+            #Fit training using batch data
+            sess.run(optimizer, feed_dict={x: batch_xs, y: batch_ys})
+            
+            #Computer the average loss
+            avg_cost += sess.run(merged_summary_op, feed_dict={x: batch_xs, y: batch_ys})
+            summary_writer.add_summary(summary_str, iteration*total_batch + i)
+            
+        #Display logs per iteration step
+        if iteration % display_step = 0;
+        print "Iteration:", '%04d' % (iteration +1), "cost=", "{:.9f}".format(avg_cost)
+    
+    print "Tuning completed!"
+    
+    #Test the model
+    predictions = tf.equal(tf.argmax(model, 1), tf.argmax(y, 1))
+    
+    #Calculate accuracy
+    accuracy = tf.reduce_mean(tf.cast(predictions, "float"))
+    print "Accuracy:", accuracy.eval({x: mnist.text.images, y: mnist.test.labels})
+    
+            
