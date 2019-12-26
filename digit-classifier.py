@@ -27,7 +27,7 @@ W = tf.Variable(tf.zeros([784, 10]))
 b = tf.Variable(tf.zeros([10]))
 
 #Scopes help us organize nodes in the graphic visualizer (Tensorboard)
-wth tf.name_scope("Wx_b") as scope:
+with tf.name_scope("Wx_b") as scope:
     #Constrct a linear model
     #First Scope: Logistic Regression on MNIST
         #We matrix multiply the input images x by the weigth matrix W and then adding the bias b
