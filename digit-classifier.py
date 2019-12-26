@@ -75,7 +75,7 @@ with tf.Session() as sess:
         total_batch = int(mnist.train.num_examples/batch_size)
         
         #loop over all batches
-        for i in range(total_batch)
+        for i in range(total_batch):
             batch_xs, batch_ys = mnist.train.next_batch(batch_size)
             
             #Fit training using batch data
