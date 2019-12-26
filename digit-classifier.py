@@ -1,7 +1,7 @@
 import input_data
-mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
+mnist = input_data.read_data_sets("/Users/davidaraya/Documents/GitHub/Digit-Images-Classifier", one_hot=True)
 
-import tensorflow as tf
+# import tensorflow as tf
 
 #Set parameters
 #learning_rate defines how fast to update weights
