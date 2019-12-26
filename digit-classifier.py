@@ -38,4 +38,26 @@ wth tf.name_scope("Wx_b") as scope:
 w_h = tf.histogram_summary("weights", W)
 b_h = tf_histogram_summary("biases", b)
 
+#Second Scope:
+#More name scopes will up graph representation
+#Cost function helps us minimize errors during training
+with tf.name_scope("cost_function") as scope:
+    #Minimize error using entropy
+    #Cost Entropy
+    cost_function = -tf.reduce_sum(y*tf.log(model))
+    
+    #Create a summary to monitor the cost function to visualize it later
+    tf.scalar_summary("cost_function", cost_function)
+    
+#Create optimization function to make model improve during training
+#We use Gradient Descent that takes our learning rate as a parameter for pacing and our cost function as a parameter to help minimize the error.
+with tf.name_scope("train") as scope:
+    #Gradient descent
+    optimizer = tf.traing.GradientDescentOptimizer(learning_rate).minimize(cost_function)
+    
+#Initializing the variables
+#After building our graph we initialize all our variables
+init = tf.initialize_all_variables()
 
+#Merge all summaries into a single operator
+merged_summary_op = tf.merge_all_summaries()
