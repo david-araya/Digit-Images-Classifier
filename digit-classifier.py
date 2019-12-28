@@ -1,7 +1,7 @@
 import input_data
 mnist = input_data.read_data_sets("/Users/davidaraya/Documents/GitHub/Digit-Images-Classifier", one_hot=True)
 
-# import tensorflow as tf
+import tensorflow as tf
 
 #Set parameters
 #learning_rate defines how fast to update weights
@@ -36,7 +36,7 @@ with tf.name_scope("Wx_b") as scope:
 #Add summary ops to collect data
 #Summary operations help us visualize the distribution of our weights and biases
 w_h = tf.histogram_summary("weights", W)
-b_h = tf_histogram_summary("biases", b)
+b_h = tf.histogram_summary("biases", b)
 
 #Second Scope:
 #More name scopes will up graph representation
