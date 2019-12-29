@@ -35,8 +35,8 @@ with tf.name_scope("Wx_b") as scope:
     
 #Add summary ops to collect data
 #Summary operations help us visualize the distribution of our weights and biases
-w_h = tf.histogram_summary("weights", W)
-b_h = tf.histogram_summary("biases", b)
+w_h = tf.summary.histogram("weights", W)
+b_h = tf.summary.histogram("biases", b)
 
 #Second Scope:
 #More name scopes will up graph representation
@@ -47,27 +47,27 @@ with tf.name_scope("cost_function") as scope:
     cost_function = -tf.reduce_sum(y*tf.log(model))
     
     #Create a summary to monitor the cost function to visualize it later
-    tf.scalar_summary("cost_function", cost_function)
+    tf.summary.scalar("cost_function", cost_function)
     
 #Create optimization function to make model improve during training
 #We use Gradient Descent that takes our learning rate as a parameter for pacing and our cost function as a parameter to help minimize the error.
 with tf.name_scope("train") as scope:
     #Gradient descent
-    optimizer = tf.traing.GradientDescentOptimizer(learning_rate).minimize(cost_function)
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost_function)
     
 #Initializing the variables
 #After building our graph we initialize all our variables
 init = tf.initialize_all_variables()
 
 #Merge all summaries into a single operator
-merged_summary_op = tf.merge_all_summaries()
+merged_summary_op = tf.summary.merge_all()
 
 #Launch the graph
 with tf.Session() as sess:
     sess.run(init)
     
     #Set the logs writer to the folder /tmp/tensorflow_logs
-    summary_writer = tf.train.SummaryWriter('/home/sergo/work/logs', graph_def=sess.graph_def)
+    summary_writer = tf.summary.FileWriter('/Users/davidaraya/Documents/GitHub/Digit-Images-Classifier', graph_def=sess.graph_def)
     
     #Training cycle
     for iteration in range(training_iteration):
@@ -83,6 +83,7 @@ with tf.Session() as sess:
             
             #Computer the average loss
             avg_cost += sess.run(merged_summary_op, feed_dict={x: batch_xs, y: batch_ys})
+            summary_str = sess.run(merged_summary_op, feed_dict={x: batch_xs, y: batch_ys})
             summary_writer.add_summary(summary_str, iteration*total_batch + i)
             
         #Display logs per iteration step
